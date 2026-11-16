@@ -2,7 +2,7 @@
 name: homepage-concept
 description: "Turns any website URL into an ultra-high-end, one-of-a-kind homepage redesign concept that looks like a top design studio made it for that brand, plus a before-and-after page to show the client and a link to send them. Uses the company's real logo, colors, photos and content, never templates or invented facts. Use when someone says 'homepage concept', '/homepage-concept', 'redesign concept for [url]', 'web design concept', 'mock up a new homepage for [company]', 'before and after for [site]', 'show this prospect what their site could look like', 'publish the concept', 'revise the [company] concept', 'we won [company]', or pastes a URL and asks what a better site could look like."
 metadata:
-  version: 1.6.0
+  version: 1.6.1
   author: Business Builders (businessbldrs.com)
 ---
 
@@ -100,7 +100,7 @@ Read `strategy.md` and `copy.md` yourself before going on. If the difference is 
 
 1. **Art direct.** `fill_prompt.mjs director ARGS`, then a separate `general-purpose` agent. It fixes the concept until `qa.mjs`, `slop.mjs` and the scroll scan are clean. If you already spotted problems (a font that feels generic, a fact you doubt, a layout that looks like a template), put them in `--notes`.
 2. **Judge.** `fill_prompt.mjs judge ARGS`, then a fresh `general-purpose` agent. It scores five lanes with evidence, runs the sameness, template and truth checks, and writes `research/scorecard.json`. It edits nothing else.
-3. **Loop.** Read the scorecard. If the verdict is "revise", run `fill_prompt.mjs director ARGS` again (it now reads the scorecard on its own) and spawn a new director, then a new judge. Do up to three judge rounds. If a lane is still under 9 after the third, stop and tell the user which lane and why; do not present it as finished.
+3. **Loop.** Read the scorecard. "ship" means done. "ship with limits" means done too: every lane is 8 or higher and what remains needs the client (a photo shoot, a price answer); put the limits list in the report as what to ask the client for. If the verdict is "revise", run `fill_prompt.mjs director ARGS` again (it now reads the scorecard on its own) and spawn a new director, then a new judge. Do up to three judge rounds. Each judge is fresh, but from round two it also checks the last round's fixes, and the director is told which sections need a rebuild, not a polish. If the verdict is still "revise" after the third, stop and tell the user which lane and why; do not present it as finished.
 
 Never raise a score yourself, and never let the director's own score stand in for the judge's.
 

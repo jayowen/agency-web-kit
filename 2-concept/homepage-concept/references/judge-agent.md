@@ -30,6 +30,8 @@ Give every score one line of evidence that points at a named section or a named 
 - Conversion: the offer is specific and says what happens next; the primary action is in the first screen on both sizes and repeated; the top objections are answered near a button; real proof sits near the top and at the close; the form or booking step asks only for what it needs; the phone path works.
 - Craft: qa.mjs and slop.mjs are clean, nothing overlaps or crowds at any width in the scroll sheets, and the code follows the code craft rules.
 
+{{PRIOR_NOTE}}
+
 THEN RUN THESE CHECKS AND REPORT EACH AS PASS OR FAIL
 
 - Sameness, top: the first screen does not share a layout move, type mood or color ground with any earlier concept in the workspace or with a sibling option.
@@ -39,9 +41,9 @@ THEN RUN THESE CHECKS AND REPORT EACH AS PASS OR FAIL
 
 WRITE {{SCORECARD}} AS JSON
 
-{"option": "{{OPTION}}", "five_second": "...", "scores": {"creative_direction": 0, "art_direction": 0, "messaging": 0, "conversion": 0, "craft": 0}, "evidence": {"creative_direction": "...", "art_direction": "...", "messaging": "...", "conversion": "...", "craft": "..."}, "checks": {"sameness_top": "pass", "sameness_body": "pass", "template": "pass", "truth": "pass"}, "fixes": ["Each fix names the section and what to change, most important first."], "verdict": "ship or revise"}
+{"option": "{{OPTION}}", "five_second": "...", "scores": {"creative_direction": 0, "art_direction": 0, "messaging": 0, "conversion": 0, "craft": 0}, "evidence": {"creative_direction": "...", "art_direction": "...", "messaging": "...", "conversion": "...", "craft": "..."}, "checks": {"sameness_top": "pass", "sameness_body": "pass", "template": "pass", "truth": "pass"}, "fixes": ["Each fix names the section and what to change, most important first."], "rebuild": ["Names of sections that need a rebuild, not a polish. Empty if none."], "limits": ["Things only the client can fix: a photo shoot, a price or contract answer, a name for a caption. Empty if none."], "prior_fixes": [], "verdict": "ship, ship with limits, or revise"}
 
-The verdict is "ship" only when every lane is 9 or higher and every check passes. Otherwise it is "revise". Do not round up to be kind. No em dashes.
+The verdict is "ship" only when every lane is 9 or higher and every check passes. It is "ship with limits" when every check passes, every lane is 8 or higher, and everything still holding a lane under 9 is in your "limits" list (the designers could not fix it without the client). Otherwise it is "revise". Weak client photography is a limit only if the page already uses the best real photos well: few, sharp, one treatment. A photo shown as a smudge is a design fault, not a limit. Do not round up to be kind. No em dashes.
 
 THE STANDARD THE PAGE WAS BUILT TO (judge against it; do not relax it)
 

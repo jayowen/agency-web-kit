@@ -65,6 +65,14 @@ const modeFile = path.join(d, "research", "mode.txt");
 if (a.mode && !["pitch", "client"].includes(a.mode)) fail("--mode must be pitch or client");
 if (a.mode) fs.writeFileSync(modeFile, a.mode + "\n");
 const mode = fs.existsSync(modeFile) ? fs.readFileSync(modeFile, "utf8").trim() : "pitch";
+// A judge after round one: keep the last scorecard and have the new judge check its fixes.
+let priorNote = 'This is the first judging round. Leave "prior_fixes" empty.';
+if (kind === "judge" && fs.existsSync(scorecard)) {
+  const n = fs.readdirSync(path.join(d, "research")).filter((x) => x.startsWith(`scorecard${tag}-round`)).length + 1;
+  const kept = path.join(d, "research", `scorecard${tag}-round${n}.json`);
+  fs.copyFileSync(scorecard, kept);
+  priorNote = `AFTER YOU HAVE WRITTEN DOWN YOUR OWN FIVE SCORES (not before), read the last round's scorecard at ${kept.replace(/\\/g, "/")}. For each item in its "fixes" list, add one line to "prior_fixes": the fix, then fixed, partly fixed or not fixed, with what you see now. Do not change your scores to match the last judge. If you disagree with a past fix, say so in one line.`;
+}
 const MODE_NOTE = mode === "client"
   ? "MODE: client project. This company is a signed client and this concept becomes the real site. The supplied material (goals, best customers, offers, competitors they named) outranks what you infer from the old site. The page must be something a developer can build."
   : "MODE: cold pitch. The company has not hired us. Work from public sources and anything in the supplied material. The page must win the meeting.";
@@ -99,7 +107,7 @@ const fills = {
   "{{DECISIONS}}": P(decisions), "{{HERO_NOTES}}": P(heroNotes), "{{META_RULE}}": metaRule,
   "{{META_FORMAT}}": "META FORMAT\n" + read("meta-format.md").split("\n").slice(1).join("\n").trim(),
   "{{DESIGN_BAR}}": read("design-bar.md").trim(),
-  "{{STRATEGY}}": P(strategy), "{{COPY}}": P(copyDeck), "{{SCORECARD}}": P(scorecard), "{{MODE_NOTE}}": MODE_NOTE, "{{TAG}}": tag,
+  "{{STRATEGY}}": P(strategy), "{{COPY}}": P(copyDeck), "{{SCORECARD}}": P(scorecard), "{{MODE_NOTE}}": MODE_NOTE, "{{TAG}}": tag, "{{PRIOR_NOTE}}": priorNote,
 };
 for (const [k, v] of Object.entries(fills)) body = body.split(k).join(v);
 const left = body.match(/\{\{[A-Z_]+\}\}/g);
@@ -114,6 +122,15 @@ if (["build", "option", "hero", "finish", "director"].includes(kind)) {
 const taste = path.join(d, "research", "taste.md");
 if (fs.existsSync(taste) && kind !== "judge") extra.push(`- taste.md (sites and looks the person running this wants to steer toward or away from; borrow the principle, never copy a layout): ${P(taste)}`);
 if (kind === "director" && fs.existsSync(scorecard)) extra.push(`- The outside judge's scorecard: ${P(scorecard)}. Fix every item in its "fixes" list and every failed check first, then anything scored under 9.`);
+if (kind === "director" && fs.existsSync(scorecard)) {
+  try {
+    const sc = JSON.parse(fs.readFileSync(scorecard, "utf8"));
+    const low = Object.entries(sc.scores || {}).filter(([, v]) => typeof v === "number" && v < 8).map(([k]) => k);
+    const failed = Object.entries(sc.checks || {}).filter(([, v]) => String(v).toLowerCase().startsWith("fail")).map(([k]) => k);
+    const rebuild = Array.isArray(sc.rebuild) ? sc.rebuild : [];
+    if (low.length || failed.length || rebuild.length) body += `\n\nTHIS ROUND IS A REBUILD, NOT A POLISH. The judge scored these under 8: ${low.join(", ") || "none"}; failed checks: ${failed.join(", ") || "none"}; sections named for rebuild: ${rebuild.join(", ") || "none"}. Small edits will not move these. Rebuild the named sections, and the first screen if creative direction or the top sameness check is on the list. Keep what the judge praised.`;
+  } catch {}
+}
 if (extra.length) body += "\n\nALSO READ BEFORE YOU START (they are part of your brief):\n" + extra.join("\n");
 if (!["research", "strategy", "copy", "judge"].includes(kind)) body += "\n\n" + MODE_NOTE;
 

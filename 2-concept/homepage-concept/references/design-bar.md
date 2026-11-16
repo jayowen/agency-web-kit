@@ -96,6 +96,7 @@ A count across 247 past concepts found one skeleton under many skins: thin ruled
 - About 80 words per screen. A screen with more than about 120 reads as a wall.
 - About 450 words on the page, not counting the nav and footer. Service lists, menus, service times and addresses are content, not copy; keep them, but cut the paragraphs around them.
 - Cut adjectives before facts. If a sentence would fit any company in the industry, delete it.
+- The copy deck sets the words. Lines it marks as never cut stay. If the design thesis needs more text than the limits allow (a newspaper, a catalog, a spec sheet), the extra is real content in list form (ads, listings, part numbers), never longer paragraphs.
 - `slop.mjs` measures all of this. Over a limit is a WARN: cut, or waive with a real reason.
 
 ## Page
@@ -141,7 +142,7 @@ StoryBrand is the skeleton; the design thesis is the skin. Every page carries th
 - Add a risk-reversal line only if the client offers one (a guarantee, free estimates, no contract, walk-ins welcome).
 - The offer is specific. The button says what the visitor gets, and one short line near it says what happens next ("We call you back within one business day"), only if that is true. If the strategy proposed a stronger label for the same real destination, use it.
 - Answer the top objections where the decision happens. Take the 2 or 3 objections in the strategy that have real answers and put each answer beside a button or in a short question list before the close, drawn in the thesis. Never a stock FAQ accordion with ten questions.
-- Show the step after the click. When the primary action is a form, a quote request or a booking, draw it on the page (near the close): only the fields a first contact needs, a label on every field, and the consent line the form needs. The concept form does not submit; its button links to the real destination.
+- Show the step after the click. When the primary action is a form, a quote request or a booking, draw it on the page (near the close): only the fields a first contact needs, a label on every field, and the consent line the form needs. The concept form does not submit: the `<form>` has no `action` and no `method`, so nothing a visitor types can end up in a URL, and its button is a link to the real destination.
 - Two buyers, two doors. If the strategy names two different buyers, the first screen routes them with two clear labels. There is still one primary action per buyer.
 - Archetype guardrails: filmstrip and index-led layouts still keep a header button; dark luxe buttons still meet AA contrast; type-as-image heroes still show the button in the first screen; the button never waits on an animation to appear.
 
