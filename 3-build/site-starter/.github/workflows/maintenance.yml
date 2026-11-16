@@ -1,0 +1,26 @@
+# Every Monday: is the site up, are the security headers there, do the links work, is it still fast?
+# Opens a GitHub issue when something fails, so nobody has to remember to look.
+name: Weekly check
+on:
+  schedule:
+    - cron: "0 12 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Build and check pages
+        run: node scripts/build.mjs && node scripts/check.mjs
+      - name: Live site checks
+        run: node scripts/live-check.mjs
+      - name: Open an issue on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue create --title "Weekly site check failed $(date +%F)" --body "See the run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

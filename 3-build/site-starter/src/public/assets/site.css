@@ -1,0 +1,11 @@
+/* Replace with the concept's styles. Keep the tokens at the top so one edit re-skins the site. */
+:root { --ink: #1d2a33; --paper: #ffffff; --accent: #1f6feb; --measure: 68ch; }
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; font: 1.0625rem/1.6 system-ui, sans-serif; color: var(--ink); background: var(--paper); }
+img { max-width: 100%; height: auto; }
+main { max-width: var(--measure); margin: 0 auto; padding: 3rem 1.25rem; }
+.site-header, .site-footer { display: flex; gap: 1rem; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; }
+.site-header nav { display: flex; gap: 1rem; align-items: center; }
+.button { padding: .6rem 1rem; border-radius: .4rem; background: var(--accent); color: #fff; text-decoration: none; }
+.skip { position: absolute; left: -999px; } .skip:focus { left: 1rem; top: 1rem; background: #fff; padding: .5rem; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }

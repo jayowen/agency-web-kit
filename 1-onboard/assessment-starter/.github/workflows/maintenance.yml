@@ -1,0 +1,71 @@
+# Automated upkeep: nightly database backup, weekly health check.
+# Any failure opens (or updates) one GitHub issue, so problems land in the same
+# queue as feedback-tool requests.
+# Same secrets/variables as deploy.yml, plus variable SITE_URL (https://...).
+name: Maintenance
+on:
+  schedule:
+    - cron: "15 7 * * *"   # nightly backup, 07:15 UTC
+    - cron: "0 13 * * 1"   # weekly health check, Monday 13:00 UTC
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  backup:
+    if: github.event.schedule != '0 13 * * 1'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Export D1
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: d1 export ${{ vars.PAGES_PROJECT }} --remote --output backup.sql
+      - uses: actions/upload-artifact@v4
+        with:
+          name: d1-backup-${{ github.run_id }}
+          path: backup.sql
+          retention-days: 30
+  health:
+    if: github.event.schedule != '15 7 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pages respond
+        run: |
+          set -e
+          for p in "/" "/admin.html" "/client.config.json"; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "${{ vars.SITE_URL }}$p")
+            echo "$p -> $code"; [ "$code" = "200" ] || { echo "FAIL $p" >> report.txt; }
+          done
+          # Admin API must refuse a request with no password.
+          code=$(curl -s -o /dev/null -w '%{http_code}' "${{ vars.SITE_URL }}/api/admin/data")
+          echo "/api/admin/data (no auth) -> $code"; [ "$code" = "401" ] || echo "FAIL admin API not locked ($code)" >> report.txt
+      - name: Broken links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --max-concurrency 4 --no-progress ${{ vars.SITE_URL }}
+          fail: false
+          output: lychee.md
+      - name: Lighthouse
+        run: |
+          npx --yes lighthouse@12 "${{ vars.SITE_URL }}" --quiet --chrome-flags="--headless --no-sandbox" \
+            --only-categories=performance,accessibility,seo,best-practices --output=json --output-path=lh.json || true
+          node -e "const r=require('./lh.json');for(const [k,v] of Object.entries(r.categories)){const s=Math.round(v.score*100);console.log(k,s);if(s<80)require('fs').appendFileSync('report.txt','Lighthouse '+k+' '+s+'\n')}" || true
+      - name: Open an issue if anything failed
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let body = fs.existsSync('report.txt') ? fs.readFileSync('report.txt','utf8') : '';
+            if (fs.existsSync('lychee.md') && /\[ERROR\]|✗|\b[45]\d\d\b/.test(fs.readFileSync('lychee.md','utf8')))
+              body += '\n### Broken links\n' + fs.readFileSync('lychee.md','utf8');
+            if (!body.trim()) return;
+            const title = 'Weekly health check found problems';
+            const { data: open } = await github.rest.issues.listForRepo({ ...context.repo, state: 'open', labels: 'maintenance' });
+            const existing = open.find(i => i.title === title);
+            if (existing) await github.rest.issues.createComment({ ...context.repo, issue_number: existing.number, body });
+            else await github.rest.issues.create({ ...context.repo, title, body, labels: ['maintenance'] });

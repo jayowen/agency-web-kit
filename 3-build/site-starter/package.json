@@ -1,0 +1,11 @@
+{
+  "name": "site-starter",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/build.mjs && node scripts/check.mjs",
+    "preview": "node scripts/build.mjs && npx --yes wrangler@4 pages dev dist",
+    "deploy": "node scripts/build.mjs && node scripts/check.mjs && node scripts/deploy.mjs"
+  }
+}

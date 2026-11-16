@@ -1,0 +1,442 @@
+{
+  "reviewMode": true,
+  "client": {
+    "slug": "sample-client",
+    "name": "Sample Client Co.",
+    "shortName": "Sample Client",
+    "logo": "/assets/client-logo.svg",
+    "logoIncludesName": false,
+    "agency": "Your Agency"
+  },
+  "theme": {
+    "ink": "#1d2a33",
+    "accent": "#1f6feb",
+    "support": "#3f8f7a",
+    "paper": "#f7f8f9",
+    "soft": "#dde5ea",
+    "alert": "#c8452f"
+  },
+  "deadline": "2026-12-15T23:59:00-05:00",
+  "intro": {
+    "eyebrow": "Website Assessment",
+    "headline": "Help shape the new website",
+    "body": "We are rebuilding the website, and the people who work here every day should shape it. This takes about 10 minutes. There are no wrong answers. Say what you actually think.",
+    "timeEstimate": "About 10 minutes",
+    "privacyNote": "Your name and email are collected so we can follow up on great ideas and make sure we hear from every area. Your answers will be shared with the project team."
+  },
+  "confirmation": {
+    "headline": "Thank you.",
+    "body": "Your input is in. We're reading every response, and what you shared will shape the website directions we bring back."
+  },
+  "roles": [
+    "Owner / Leadership",
+    "Sales",
+    "Marketing",
+    "Customer Service",
+    "Operations",
+    "Finance / Admin",
+    "Other"
+  ],
+  "tenures": [
+    "Less than 1 year",
+    "1 to 3 years",
+    "4 to 7 years",
+    "8 to 15 years",
+    "More than 15 years"
+  ],
+  "sections": [
+    {
+      "id": "identity",
+      "title": "First, who are you?",
+      "blurb": "So we can make sure every part of the company is represented.",
+      "questions": [
+        {
+          "key": "name",
+          "type": "identity_name",
+          "label": "Your name",
+          "required": true
+        },
+        {
+          "key": "email",
+          "type": "identity_email",
+          "label": "Your email",
+          "required": true
+        },
+        {
+          "key": "role",
+          "type": "identity_select",
+          "label": "Your area",
+          "options_from": "roles",
+          "required": true
+        },
+        {
+          "key": "tenure",
+          "type": "identity_select",
+          "label": "How long have you been here?",
+          "options_from": "tenures",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "today",
+      "title": "The site today",
+      "blurb": "Think about the website as it is right now. Be honest. This part is the most useful thing you can give us.",
+      "questions": [
+        {
+          "key": "site_works",
+          "type": "textarea",
+          "label": "What works on the current website?",
+          "placeholder": "Pages you use, things people find easily, anything that feels right...",
+          "required": false
+        },
+        {
+          "key": "site_frustrates",
+          "type": "textarea",
+          "label": "What frustrates you about it, or what do you hear people complain about?",
+          "placeholder": "Hard to find, out of date, confusing, slow, not us...",
+          "required": false
+        },
+        {
+          "key": "guest_score",
+          "type": "rating",
+          "label": "How well does the site serve someone who has never heard of us?",
+          "min": 1,
+          "max": 10,
+          "minLabel": "Not well at all",
+          "maxLabel": "Extremely well",
+          "required": true
+        },
+        {
+          "key": "site_keep",
+          "type": "textarea",
+          "label": "What must NOT change?",
+          "placeholder": "Anything on the current site you would fight to keep.",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "jobs",
+      "title": "What the site is for",
+      "blurb": "A website can't do everything well. Help us decide what matters most.",
+      "questions": [
+        {
+          "key": "top_jobs",
+          "type": "multi_select",
+          "label": "If the website only did three things really well, what should they be?",
+          "helper": "Pick exactly 3.",
+          "count": 3,
+          "options": [
+            {
+              "id": "explain",
+              "label": "Explain what we do in a few seconds"
+            },
+            {
+              "id": "contact",
+              "label": "Make it easy to call, book or ask for a quote"
+            },
+            {
+              "id": "trust",
+              "label": "Prove we're good at it (reviews, results, past work)"
+            },
+            {
+              "id": "services",
+              "label": "Help people find the right service or product"
+            },
+            {
+              "id": "pricing",
+              "label": "Answer pricing and common questions"
+            },
+            {
+              "id": "hiring",
+              "label": "Attract good people to work here"
+            },
+            {
+              "id": "customers",
+              "label": "Help current customers (support, accounts, payments)"
+            }
+          ]
+        },
+        {
+          "key": "audience",
+          "type": "multi_select",
+          "label": "Who does the website most need to serve?",
+          "helper": "Pick exactly 2.",
+          "count": 2,
+          "options": [
+            {
+              "id": "new",
+              "label": "People who have never heard of us"
+            },
+            {
+              "id": "comparing",
+              "label": "People comparing us with a competitor"
+            },
+            {
+              "id": "referred",
+              "label": "People a customer sent our way"
+            },
+            {
+              "id": "customers",
+              "label": "Current customers"
+            },
+            {
+              "id": "recruits",
+              "label": "Job seekers"
+            },
+            {
+              "id": "partners",
+              "label": "Partners and vendors"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pathway",
+      "title": "Getting in touch",
+      "blurb": "The website should move someone from curious to talking with us, then make the next step obvious.",
+      "questions": [
+        {
+          "key": "pathway_clarity",
+          "type": "rating",
+          "label": "How clearly does the website show someone what to do next?",
+          "min": 1,
+          "max": 10,
+          "minLabel": "Not clear at all",
+          "maxLabel": "Crystal clear",
+          "required": true
+        },
+        {
+          "key": "message_response",
+          "type": "rating",
+          "label": "When someone is ready to talk, how easy is it to reach the right person?",
+          "min": 1,
+          "max": 10,
+          "minLabel": "Very hard",
+          "maxLabel": "Effortless",
+          "required": true
+        },
+        {
+          "key": "pathway_stuck",
+          "type": "textarea",
+          "label": "Where do people get stuck between finding us and becoming a customer?",
+          "placeholder": "What you see in your role, what customers tell you...",
+          "required": false
+        },
+        {
+          "key": "pathway_wish",
+          "type": "textarea",
+          "label": "What's one thing the website could do to make your job easier?",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "content",
+      "title": "Pages your team updates",
+      "blurb": "A site only stays good if it's easy to keep current. Tell us what your team needs to change and how often.",
+      "questions": [
+        {
+          "key": "update_needs",
+          "type": "textarea",
+          "label": "What does your team need to post or update on the website, and how often?",
+          "placeholder": "Hours, prices, staff, events, job openings, news...",
+          "required": false
+        },
+        {
+          "key": "update_pain",
+          "type": "textarea",
+          "label": "What's hardest about getting something updated on the site today?",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "concept",
+      "title": "Homepage concept",
+      "blurb": "We've built a first draft of the new homepage. Open it, scroll through, then come back and tell us what you think. It's a starting point, not a final design.",
+      "questions": [
+        {
+          "key": "concept_score",
+          "type": "rating",
+          "label": "How well does this direction fit us?",
+          "link": {
+            "href": "https://example.com",
+            "label": "Open the homepage concept"
+          },
+          "min": 1,
+          "max": 10,
+          "minLabel": "Not a fit",
+          "maxLabel": "Exactly right",
+          "required": true
+        },
+        {
+          "key": "concept_likes",
+          "type": "textarea",
+          "label": "What works?",
+          "required": false
+        },
+        {
+          "key": "concept_missing",
+          "type": "textarea",
+          "label": "What's missing or feels off?",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "feel",
+      "title": "How it should feel",
+      "blurb": "For each pair, set two markers: where the website is today, and where it should be. It's fine if they're in the same place.",
+      "questions": [
+        {
+          "key": "f_warm_polished",
+          "type": "slider_pair",
+          "left": "Warm",
+          "right": "Polished"
+        },
+        {
+          "key": "f_simple_full",
+          "type": "slider_pair",
+          "left": "Simple",
+          "right": "Full of content"
+        },
+        {
+          "key": "f_quiet_bold",
+          "type": "slider_pair",
+          "left": "Quiet",
+          "right": "Bold"
+        },
+        {
+          "key": "f_traditional_contemporary",
+          "type": "slider_pair",
+          "left": "Traditional",
+          "right": "Contemporary"
+        },
+        {
+          "key": "words_are",
+          "type": "wordbank",
+          "label": "Pick exactly 5 words the website should feel like",
+          "count": 5,
+          "allowWriteIn": true,
+          "words": [
+            "welcoming",
+            "clear",
+            "warm",
+            "hopeful",
+            "joyful",
+            "real",
+            "simple",
+            "modern",
+            "alive",
+            "inviting",
+            "bold",
+            "honest",
+            "helpful",
+            "easy",
+            "fun",
+            "personal",
+            "energetic",
+            "calm",
+            "trustworthy",
+            "local",
+            "expert",
+            "confident",
+            "friendly",
+            "premium"
+          ]
+        },
+        {
+          "key": "words_are_not",
+          "type": "wordbank",
+          "negative": true,
+          "label": "Now pick exactly 3 words it should never feel like",
+          "count": 3,
+          "allowWriteIn": true,
+          "words": [
+            "confusing",
+            "cluttered",
+            "corporate",
+            "cold",
+            "outdated",
+            "salesy",
+            "overwhelming",
+            "generic",
+            "exclusive",
+            "slick",
+            "chaotic",
+            "impersonal",
+            "trying too hard",
+            "hard to navigate",
+            "pushy",
+            "cheap"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "references",
+      "title": "Sites you admire",
+      "blurb": "Examples beat adjectives. In our industry or not, any website that does something well counts.",
+      "questions": [
+        {
+          "key": "websites",
+          "type": "repeater",
+          "label": "Websites that point the right direction",
+          "addLabel": "Add another website",
+          "max": 3,
+          "fields": [
+            {
+              "key": "url",
+              "label": "Website",
+              "placeholder": "https://",
+              "type": "url",
+              "required": true
+            },
+            {
+              "key": "why",
+              "label": "What do you like about it?",
+              "placeholder": "One line is plenty."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vision",
+      "title": "A year out",
+      "blurb": "Last one. This is the answer we'll read out loud.",
+      "questions": [
+        {
+          "key": "year_out",
+          "type": "sentence",
+          "label": "Finish this sentence",
+          "prefix": "A year after the new website launches, I hope people say it",
+          "placeholder": "...",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "admin": {
+    "tags": [
+      {
+        "id": "voice",
+        "label": "Voice",
+        "color": "#5db7a5"
+      },
+      {
+        "id": "vote",
+        "label": "Vote",
+        "color": "#1fa6ff"
+      },
+      {
+        "id": "veto",
+        "label": "Veto",
+        "color": "#d14b3f"
+      }
+    ]
+  }
+}

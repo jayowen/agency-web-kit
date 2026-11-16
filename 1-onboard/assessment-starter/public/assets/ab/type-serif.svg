@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" role="img" aria-labelledby="t-type-serif">
+  <title id="t-type-serif">Style specimen: wordmark set in a classic serif typeface</title>
+  <rect x="0" y="0" width="400" height="260" fill="#F4F1EB"/>
+  <text x="200" y="142" text-anchor="middle" font-family="Georgia, 'Times New Roman', Times, serif" font-size="32" letter-spacing="4" fill="#1F2A37">NORTHFIELD</text>
+  <line x1="120" y1="168" x2="280" y2="168" stroke="#1F2A37" stroke-width="1"/>
+  <text x="200" y="192" text-anchor="middle" font-family="Georgia, 'Times New Roman', Times, serif" font-size="11" letter-spacing="3" fill="#1F2A37">STYLE SPECIMEN</text>
+</svg>

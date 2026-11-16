@@ -1,0 +1,7 @@
+{
+  "name": "homepage-concept-tools",
+  "private": true,
+  "type": "module",
+  "description": "Screenshot, research, QA and publishing tools for the homepage-concept skill",
+  "dependencies": { "playwright": "^1.63.0" }
+}

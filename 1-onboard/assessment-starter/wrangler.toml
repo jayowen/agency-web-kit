@@ -1,0 +1,9 @@
+# setup.mjs rewrites this file with your project name and database id.
+name = "sample-client-assessment"
+compatibility_date = "2026-08-01"
+pages_build_output_dir = "public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "sample-client-assessment"
+database_id = "RUN-SETUP-FIRST"

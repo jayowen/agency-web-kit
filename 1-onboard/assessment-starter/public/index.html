@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Website Assessment</title>
+    <meta name="description" content="A short website assessment survey." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="icon" href="/assets/client-logo.svg" />
+  </head>
+
+  <body>
+    <div class="survey-page">
+      <!-- Deadline banner, filled in from config at runtime -->
+      <div id="deadline-banner" class="banner hidden" role="status"></div>
+
+      <header class="survey-head" id="survey-head" hidden>
+        <div class="wrap">
+          <div class="survey-brandbar">
+            <img id="brand-logo" class="survey-logo hidden" alt="" />
+            <span class="survey-clientname" id="brand-name"></span>
+            <span class="survey-agency" id="brand-agency"></span>
+          </div>
+
+          <div class="survey-progress" id="progress-block">
+            <div class="survey-progress-meta">
+              <span class="survey-step" id="progress-step"></span>
+              <span class="survey-step-title" id="progress-title"></span>
+            </div>
+            <div
+              class="progress-track"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              id="progress-bar"
+            >
+              <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="survey-main" id="survey-main" tabindex="-1">
+        <div class="wrap">
+          <div id="view">
+            <p class="survey-loading">Loading…</p>
+          </div>
+        </div>
+      </main>
+
+      <footer class="survey-foot" id="survey-foot" hidden>
+        <div class="wrap">
+          <div class="survey-nav">
+            <button type="button" class="btn btn-ghost" id="btn-back">Back</button>
+            <button type="button" class="btn btn-primary survey-next" id="btn-next">Next</button>
+          </div>
+          <p class="survey-autosave" id="autosave-note">Your answers save on this device as you go.</p>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

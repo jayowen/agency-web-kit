@@ -1,0 +1,8 @@
+{
+  "name": "Your Agency",
+  "url": "https://youragency.com",
+  "accent": "#1f5eff",
+  "logo": "logo.svg",
+  "cta": { "label": "Book a call", "url": "https://youragency.com/call" },
+  "project": "youragency-concepts"
+}

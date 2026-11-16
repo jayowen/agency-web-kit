@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Website Assessment Dashboard</title>
+<link rel="icon" href="/assets/client-logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/admin.css" />
+</head>
+<body class="admin">
+
+<!-- Login gate -->
+<div id="gate" class="gate no-print" hidden>
+  <form id="gate-form" class="gate-card" autocomplete="off">
+    <p class="gate-eyebrow" id="gate-eyebrow">Website Assessment</p>
+    <h1 class="gate-title">Dashboard</h1>
+    <p class="gate-help">Enter the admin password to continue.</p>
+    <label class="gate-label" for="gate-pw">Password</label>
+    <input id="gate-pw" class="gate-input" type="password" autocomplete="current-password" />
+    <p id="gate-error" class="gate-error" role="alert" hidden></p>
+    <button id="gate-submit" class="btn btn-primary gate-btn" type="submit">Sign in</button>
+  </form>
+</div>
+
+<!-- App -->
+<div id="app" hidden>
+
+  <header class="topbar no-print">
+    <div class="topbar-left">
+      <img id="brand-logo" class="topbar-logo" alt="" hidden />
+      <div>
+        <p class="topbar-eyebrow" id="topbar-eyebrow">Website Assessment</p>
+        <h1 class="topbar-title" id="topbar-title">Dashboard</h1>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span id="last-loaded" class="topbar-meta"></span>
+      <button id="btn-refresh" class="btn btn-ghost" type="button">Refresh</button>
+      <button id="btn-print" class="btn btn-ghost" type="button">Print report</button>
+      <button id="btn-signout" class="btn btn-ghost" type="button">Sign out</button>
+    </div>
+  </header>
+
+  <!-- The segment filter -->
+  <div class="filterbar no-print" id="filterbar">
+    <div class="filterbar-row">
+      <div class="filter-group">
+        <span class="filter-label">Segment</span>
+        <div class="segbtns" id="segment-buttons"></div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Role</span>
+        <select id="filter-role" class="filter-select"></select>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Tenure</span>
+        <select id="filter-tenure" class="filter-select"></select>
+      </div>
+
+      <div class="filter-group">
+        <label class="switch">
+          <input type="checkbox" id="filter-compare" />
+          <span class="switch-track"><span class="switch-knob"></span></span>
+          <span class="switch-text">Compare against everyone</span>
+        </label>
+      </div>
+
+      <div class="filter-spacer"></div>
+
+      <div class="filter-count" id="filter-count">Showing 0 of 0</div>
+      <button id="btn-reset" class="btn btn-ghost btn-sm" type="button">Reset</button>
+    </div>
+
+    <div class="picker" id="custom-picker" hidden>
+      <div class="picker-head">
+        <strong class="picker-title">Pick people by hand</strong>
+        <input id="picker-search" class="filter-input" type="search" placeholder="Search name, email, role" />
+        <span class="picker-count" id="picker-count"></span>
+        <button class="btn btn-ghost btn-sm" type="button" data-picker="all">Select all shown</button>
+        <button class="btn btn-ghost btn-sm" type="button" data-picker="none">Clear</button>
+      </div>
+      <div class="picker-list" id="picker-list"></div>
+    </div>
+  </div>
+
+  <nav class="tabs no-print" id="tabs">
+    <button class="tab is-active" data-view="responses" type="button">Responses</button>
+    <button class="tab" data-view="results" type="button">Results</button>
+    <button class="tab" data-view="consensus" type="button">Consensus</button>
+    <button class="tab" data-view="report" type="button">Report</button>
+  </nav>
+
+  <main id="view" class="view"></main>
+
+  <div id="toast" class="toast no-print" hidden></div>
+</div>
+
+<script type="module" src="/admin.js"></script>
+</body>
+</html>

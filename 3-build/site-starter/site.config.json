@@ -1,0 +1,7 @@
+{
+  "name": "Sample Client Co.",
+  "url": "https://www.example.com",
+  "description": "One plain sentence about what this business does and for whom.",
+  "pagesProject": "sample-client-site",
+  "noindex": true
+}

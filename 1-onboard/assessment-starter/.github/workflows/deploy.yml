@@ -1,0 +1,25 @@
+# Deploys the site to Cloudflare Pages on every push to main.
+# Repo secrets needed (Settings > Secrets and variables > Actions):
+#   CLOUDFLARE_API_TOKEN   token with "Cloudflare Pages: Edit" and "D1: Edit"
+#   CLOUDFLARE_ACCOUNT_ID
+# Repo variable: PAGES_PROJECT  (e.g. acme-website-assessment)
+name: Deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Check config
+        run: node scripts/check-config.mjs public/client.config.json
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy public --project-name ${{ vars.PAGES_PROJECT }} --branch main

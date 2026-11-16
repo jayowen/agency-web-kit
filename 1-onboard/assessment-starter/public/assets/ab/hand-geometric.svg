@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" role="img" aria-labelledby="t-hand-geometric">
+  <title id="t-hand-geometric">Style specimen: strict geometric constructed wordmark with a ruled underline</title>
+  <rect x="0" y="0" width="400" height="260" fill="#F4F1EB"/>
+  <text x="200" y="145" text-anchor="middle" font-family="Futura, 'Century Gothic', 'Avenir Next', 'Trebuchet MS', sans-serif" font-size="34" letter-spacing="2" fill="#1F2A37">Northfield</text>
+  <path d="M112 170 L 292 170" fill="none" stroke="#1F2A37" stroke-width="1.6" stroke-linecap="butt"/>
+  <text x="200" y="194" text-anchor="middle" font-family="Futura, 'Century Gothic', 'Avenir Next', 'Trebuchet MS', sans-serif" font-size="12" letter-spacing="1" fill="#1F2A37">Style specimen</text>
+</svg>

@@ -1,0 +1,11 @@
+# Security headers on every page. Check them at securityheaders.com after launch.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+# Fingerprint-free assets: cache for a day, check back after.
+/assets/*
+  Cache-Control: public, max-age=86400, must-revalidate

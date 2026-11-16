@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" role="img" aria-labelledby="t-lockup-icon">
+  <title id="t-lockup-icon">Style specimen: abstract icon stacked above the wordmark</title>
+  <rect x="0" y="0" width="400" height="260" fill="#F4F1EB"/>
+  <circle cx="200" cy="98" r="34" fill="none" stroke="#1F2A37" stroke-width="2"/>
+  <path d="M182 112 L 182 96 A 18 18 0 0 1 218 96 L 218 112" fill="none" stroke="#1F2A37" stroke-width="2"/>
+  <line x1="200" y1="86" x2="200" y2="112" stroke="#1F2A37" stroke-width="2"/>
+  <text x="200" y="178" text-anchor="middle" font-family="Helvetica, Arial, 'Helvetica Neue', sans-serif" font-size="26" letter-spacing="4" fill="#1F2A37">NORTHFIELD</text>
+  <text x="200" y="202" text-anchor="middle" font-family="Helvetica, Arial, 'Helvetica Neue', sans-serif" font-size="10" letter-spacing="3" fill="#1F2A37">STYLE SPECIMEN</text>
+</svg>
