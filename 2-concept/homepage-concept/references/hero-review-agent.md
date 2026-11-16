@@ -25,6 +25,7 @@ WHAT THIS WORKSPACE ALREADY USES, WITH THE DESIGN LOG (this hero must not repeat
    - Is the headline 7 words or fewer, with one plain sentence under it, and the primary button fully visible on both sizes?
    - Is the hero, nav and footer type in the plan different from every type under AVOID and from the other options?
    - Does the hero carry the thesis, or is it a generic hero with the brand's colors on it?
+   - Does the first screen say the strategy's difference, in the copy deck's words, or could a competitor run the same hero?
    - Is the type deliberate: scale contrast, tight display tracking, a real pairing?
 3. Run: node {{TOOLS}}/slop.mjs {{QA_TARGET}} --stage hero
 4. Score the hero 1 to 10. 7 is "fine". It must reach 9.

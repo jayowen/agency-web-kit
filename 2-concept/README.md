@@ -8,7 +8,7 @@ In Claude Code, in a folder you keep for concepts:
 /homepage-concept https://their-site.com
 ```
 
-The first screen is ready to look at in about 15 minutes. A finished concept takes 30 to 60.
+The first screen is ready to look at in about 30 minutes. A finished concept takes one to two hours, because a strategist, a copywriter and an outside judge now work on it too.
 
 ## Three things that make it yours
 

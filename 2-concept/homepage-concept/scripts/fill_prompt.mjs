@@ -1,15 +1,24 @@
 // Fill a subagent brief for the homepage-concept skill and save it in the concept's research folder.
 //
+// Every run starts with three shared passes, once per company:
+//   node fill_prompt.mjs research --dir DIR --name NAME --url URL --tools TOOLS [--mode pitch|client] [--notes "..."] [--brief FILE]
+//   node fill_prompt.mjs strategy ...   competitors, the difference, objections, the offer, voice
+//   node fill_prompt.mjs copy     ...   the copy deck every option sets
+//
 // One option (the default), hero first:
-//   node fill_prompt.mjs build    --dir DIR --name NAME --url URL --tools TOOLS [--notes "..."] [--brief FILE]   research, plan, hero only
+//   node fill_prompt.mjs build    ...   plan and hero only
 //   node fill_prompt.mjs hero     ...   fresh-eyes review of the hero alone
 //   node fill_prompt.mjs finish   ...   the rest of the page, meta.json
 //   node fill_prompt.mjs director ...   art direction of the whole page
+//   node fill_prompt.mjs judge    ...   outside scorecard; never edits the page
 //
-// Several options (built in parallel from one shared research pass):
-//   node fill_prompt.mjs research ...
+// Several options (built in parallel from the shared passes):
 //   node fill_prompt.mjs option   ... --option b --count 3 --assign "archetype, hero, nav, footer, fonts, idea" --siblings "A: ..., C: ..."
-//   node fill_prompt.mjs hero | finish | director ... --option b --count 3
+//   node fill_prompt.mjs hero | finish | director | judge ... --option b --count 3
+//
+// --mode is saved in DIR/research/mode.txt and reused. Briefs also pick up DIR/research/client-brief.*
+// (what the client or the agency supplied), DIR/research/taste.md (looks to steer toward or away from)
+// and, for the director, the judge's latest scorecard, whenever those files exist.
 //
 // --brief FILE adds a client brief to every agent: assessment results, discovery notes, a list of
 // reviews or numbers. Real material from the client outranks anything scraped.
@@ -21,11 +30,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { workspaceIndex } from "./workspace_index.mjs";
 
-const KINDS = { build: "build-agent.md", research: "research-agent.md", option: "option-build-agent.md", hero: "hero-review-agent.md", finish: "finish-agent.md", director: "director-agent.md" };
+const KINDS = { build: "build-agent.md", research: "research-agent.md", option: "option-build-agent.md", hero: "hero-review-agent.md", finish: "finish-agent.md", director: "director-agent.md", strategy: "strategy-agent.md", copy: "copy-agent.md", judge: "judge-agent.md" };
 const REF = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "references");
 const argv = process.argv.slice(2);
 const kind = argv[0];
-const a = { notes: "", brief: "", option: "", count: "1", assign: "", siblings: "" };
+const a = { notes: "", brief: "", option: "", count: "1", assign: "", siblings: "", mode: "" };
 for (let i = 1; i < argv.length; i++) {
   if (!argv[i].startsWith("--")) fail(`unexpected argument: ${argv[i]}`);
   a[argv[i].slice(2)] = argv[++i] ?? "";
@@ -49,6 +58,16 @@ const decisions = path.join(d, "research", `decisions${tag}.md`);
 const heroNotes = path.join(d, "research", `hero-review${tag}.md`);
 for (const sub of ["concept/assets", "after"]) fs.mkdirSync(path.join(odir, sub), { recursive: true });
 fs.mkdirSync(path.join(d, "research", "raw"), { recursive: true });
+const strategy = path.join(d, "research", "strategy.md");
+const copyDeck = path.join(d, "research", "copy.md");
+const scorecard = path.join(d, "research", `scorecard${tag}.json`);
+const modeFile = path.join(d, "research", "mode.txt");
+if (a.mode && !["pitch", "client"].includes(a.mode)) fail("--mode must be pitch or client");
+if (a.mode) fs.writeFileSync(modeFile, a.mode + "\n");
+const mode = fs.existsSync(modeFile) ? fs.readFileSync(modeFile, "utf8").trim() : "pitch";
+const MODE_NOTE = mode === "client"
+  ? "MODE: client project. This company is a signed client and this concept becomes the real site. The supplied material (goals, best customers, offers, competitors they named) outranks what you infer from the old site. The page must be something a developer can build."
+  : "MODE: cold pitch. The company has not hired us. Work from public sources and anything in the supplied material. The page must win the meeting.";
 
 // Siblings: what the other options are doing (given, plus anything already written to disk).
 const sib = a.siblings.trim() ? [a.siblings.trim()] : [];
@@ -80,11 +99,29 @@ const fills = {
   "{{DECISIONS}}": P(decisions), "{{HERO_NOTES}}": P(heroNotes), "{{META_RULE}}": metaRule,
   "{{META_FORMAT}}": "META FORMAT\n" + read("meta-format.md").split("\n").slice(1).join("\n").trim(),
   "{{DESIGN_BAR}}": read("design-bar.md").trim(),
+  "{{STRATEGY}}": P(strategy), "{{COPY}}": P(copyDeck), "{{SCORECARD}}": P(scorecard), "{{MODE_NOTE}}": MODE_NOTE, "{{TAG}}": tag,
 };
 for (const [k, v] of Object.entries(fills)) body = body.split(k).join(v);
 const left = body.match(/\{\{[A-Z_]+\}\}/g);
 if (left) fail(`unfilled placeholders in ${KINDS[kind]}: ${[...new Set(left)].join(", ")}`);
 
+// Shared inputs: every agent after the one that writes a file is told to read it.
+const extra = [];
+if (["build", "option", "hero", "finish", "director"].includes(kind)) {
+  extra.push(`- Strategy (competitors, the difference, objections, the offer, voice): ${P(strategy)}`);
+  extra.push(`- Copy deck (set these words; trim to fit, never rewrite the meaning, never add claims): ${P(copyDeck)}`);
+}
+const taste = path.join(d, "research", "taste.md");
+if (fs.existsSync(taste) && kind !== "judge") extra.push(`- taste.md (sites and looks the person running this wants to steer toward or away from; borrow the principle, never copy a layout): ${P(taste)}`);
+if (kind === "director" && fs.existsSync(scorecard)) extra.push(`- The outside judge's scorecard: ${P(scorecard)}. Fix every item in its "fixes" list and every failed check first, then anything scored under 9.`);
+if (extra.length) body += "\n\nALSO READ BEFORE YOU START (they are part of your brief):\n" + extra.join("\n");
+if (!["research", "strategy", "copy", "judge"].includes(kind)) body += "\n\n" + MODE_NOTE;
+
+// A client brief saved earlier (by --brief or by the intake step) is picked up on every later call.
+if (!a.brief.trim() && kind !== "judge") {
+  const saved = fs.readdirSync(path.join(d, "research")).find((x) => /^client-brief\./.test(x));
+  if (saved) a.brief = path.join(d, "research", saved);
+}
 if (a.brief.trim()) {
   const bf = abs(a.brief);
   if (!fs.existsSync(bf)) fail(`--brief file not found: ${bf}`);

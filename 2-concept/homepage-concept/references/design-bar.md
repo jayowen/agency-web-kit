@@ -11,6 +11,8 @@ Ultra-high-end, agency-of-the-year work. It must look like a senior human design
 - Use the real logo, real colors (pull hex values from their CSS and logo), real photography and real voice.
 - Push the brand upward; don't replace it. If the brand is weak, refine it (a better tint and shade system, a sharper accent) but keep it recognizable.
 - Write a design thesis first: one idea the whole page expresses for this industry and audience. Examples: a valet company built around a claim ticket, a fishing shop built on a drawn nautical chart of its own waters, a staffing firm built as a job order form, a symphony built as a program-book cover, a plumbing filter company built as a schematic. Every section must serve the idea.
+- The thesis carries the strategy. `research/strategy.md` names what this company can say that its competitors cannot; the idea must make that difference felt, and must not look like the competitor sites the strategy describes.
+- Taste input is optional. If `research/taste.md` exists, it lists sites or looks the person running this wants to steer toward or away from. Borrow the principle (the pacing, the restraint, the way type and photo meet), never a layout. The brand still comes first.
 
 ## Composition archetypes
 
@@ -45,6 +47,12 @@ The archetype is the backbone; the hero, nav and footer are the chrome people re
 
 The first screen must show a real photograph or video, on desktop (1440x900) AND on phones (390x844), without scrolling. Type-only, illustration-only, diagram-only or UI-only first screens are not allowed, except in very rare cases where the brand truly has no usable photography (say so in the brief, and still try a real still from their video, their building, their product or their team first). Logos and icons do not count. The photo must be large enough to matter: at least about a quarter of the first screen, not a thumbnail. Every archetype can do this: type-as-image puts a big photo inset under or behind the type, diagram-led sets a real photo beside or under the drawing, interface-led pairs the UI with a real photo of people using it.
 
+## Photo direction
+
+- One treatment for every photo on the page: the same crop logic, the same color handling (all natural, all duotone in a brand color, all black and white with one color accent). Name it in the plan. Mixed treatments read as a template filled with whatever was on hand.
+- Crop with intent. Faces and hands large; no dead sky; no heads cut at the forehead.
+- When the brief's photo verdict is mixed or weak: use fewer photos, smaller and sharper; let type, a diagram or the thesis object carry more of the page; and never upscale. The shot list in the brief goes into the report so the client knows what a shoot would add.
+
 ## Typography
 
 - Type carries the design. Choose a deliberate display + body pairing from Google Fonts or Fontshare that fits the brand.
@@ -64,10 +72,21 @@ The first screen must show a real photograph or video, on desktop (1440x900) AND
 
 These bans target generic styling, not the message. A plan, real proof and a quieter second call to action are still required (see "Message and conversion path"); draw them in this page's own language, never as the generic version banned above.
 
+## Sameness check
+
+A count across 247 past concepts found one skeleton under many skins: thin ruled rows on 98% of pages, seven or more stacked full-width bands on 95%, a numbered list on 74%. Break it on every page.
+
+- Thin ruled rows (list rows split by hairlines) may lead one section per page at most.
+- At least two sections must break the stacked full-width band: an overlap, a sideways strip, an inset, type set inside a full-bleed image, or an off-center layout.
+- No large pull-quote band directly under the hero by default. Proof near the top takes a form the last five concepts in the workspace did not use.
+- Before the design thesis, list in the brief the layout moves of the last five concepts in the workspace (hero shape, proof device, list device, section rhythm) and reuse none of them. With several options, the sibling options count too.
+- The page below the first screen is where sameness hides. Every section between the hero and the footer gets its own layout decision from the thesis; no two sections in a row share a structure, and the proof, the plan and the service list each take a form the workspace's last ten concepts did not use.
+- Art director: blur the desktop shot until the text cannot be read. If the silhouette could pass for another concept in the workspace, rebuild two sections before scoring.
+
 ## Content
 
 - Only real content from their live site and public sources: services, history, addresses, phones, hours, real reviews quoted word for word with names, real team names.
-- Rewrite headlines and body copy into clear StoryBrand style: the customer is the hero, a clear problem, the company as the guide, a simple plan, one primary call to action. Never invent facts, numbers, quotes, awards or people. The full message rules are in "Message and conversion path" below.
+- The words come from the copy deck (`research/copy.md`), written before design in clear StoryBrand style, held loosely: the customer is the hero, a clear problem, the company as the guide, a simple plan, one primary call to action. Set those words. Trim to fit, but never change the meaning or add a claim. Never invent facts, numbers, quotes, awards or people. The full message rules are in "Message and conversion path" below.
 - No em dashes anywhere. Use commas, colons or two sentences.
 - If the live site is thin, a real fact about it (a broken button, an old copyright year, a locked site) belongs in the problems list, not in the concept.
 
@@ -85,7 +104,9 @@ These bans target generic styling, not the message. A plan, real proof and a qui
 - Fully responsive. Check 390px and 1440px. No sideways scroll at any width (add `html,body{overflow-x:clip}` if art bleeds off the edge on purpose).
 - Keep the phone version under about 10,000px tall: use swipe rows and hide repeat copy on phones rather than stacking everything. Never hide a call to action, a phone number or proof to save height.
 - Accessible: exactly one h1, alt text on every image, strong contrast, visible focus states, a skip link.
-- Motion is restrained: a considered hero entrance, scroll reveals that never hide content if JS fails, hover states with craft. Respect `prefers-reduced-motion`. Vanilla JS, or GSAP from cdnjs only.
+- Motion is restrained and chosen: one signature movement that belongs to the thesis (named in the plan), a considered hero entrance, scroll reveals that never hide content if JS fails, hover states with craft. Respect `prefers-reduced-motion`. Vanilla JS, or GSAP from cdnjs only.
+- A hero video autoplays muted and loops, with no play or pause button, and is never paused by script (not even for reduced motion).
+- Layout holds at every width from 360 to 2560: no `position: sticky` on section content (only the site header and phone action bar), and no absolutely positioned text or media in the hero that can collide with the copy. Use grid areas so the copy and the photo each own their space. `scrollscan.mjs` checks this at 15 widths.
 
 ## Message and conversion path
 
@@ -118,6 +139,10 @@ StoryBrand is the skeleton; the design thesis is the skin. Every page carries th
 - On phones the primary action is always reachable: a sticky bar or header button styled to the design, at least 44px tall. Businesses that run on calls get a tap-to-call link, and every phone number on the page is a `tel:` link.
 - Put one piece of real, sourced proof within about one and a half screens of the top, and one beside the closing call to action.
 - Add a risk-reversal line only if the client offers one (a guarantee, free estimates, no contract, walk-ins welcome).
+- The offer is specific. The button says what the visitor gets, and one short line near it says what happens next ("We call you back within one business day"), only if that is true. If the strategy proposed a stronger label for the same real destination, use it.
+- Answer the top objections where the decision happens. Take the 2 or 3 objections in the strategy that have real answers and put each answer beside a button or in a short question list before the close, drawn in the thesis. Never a stock FAQ accordion with ten questions.
+- Show the step after the click. When the primary action is a form, a quote request or a booking, draw it on the page (near the close): only the fields a first contact needs, a label on every field, and the consent line the form needs. The concept form does not submit; its button links to the real destination.
+- Two buyers, two doors. If the strategy names two different buyers, the first screen routes them with two clear labels. There is still one primary action per buyer.
 - Archetype guardrails: filmstrip and index-led layouts still keep a header button; dark luxe buttons still meet AA contrast; type-as-image heroes still show the button in the first screen; the button never waits on an animation to appear.
 
 ## Technical
@@ -127,6 +152,16 @@ StoryBrand is the skeleton; the design thesis is the skin. Every page carries th
 - If the client's photos are small, use them at sizes where they stay sharp. Never upscale a 600px photo into a full-bleed hero.
 - Fonts load from Google Fonts or Fontshare with a `<link>`.
 - It must work when opened as a file and when served.
+
+## Built to ship
+
+Concepts become real sites. Design freely, but build so a developer (or the concept-to-site skill) can lift it.
+
+- Every section is a `<section data-block="name">` with a short plain name (`hero`, `service-index`, `review-ledger`, `closing-call`).
+- Content that repeats (services, reviews, team, locations, projects) is one repeated element fed from a list, never hand-built one-offs with different markup each time. That list becomes a CMS collection.
+- Text an editor would change lives in the HTML, never baked into an image, an SVG path or CSS `content`.
+- One-off art (a drawn map, a diagram) is fine; it is custom work, and client projects name it in the build notes.
+- Pitch concepts may load fonts from Google Fonts or Fontshare. The real build self-hosts them, and loads no tracking before consent.
 
 ## Code craft (prospects open the source)
 

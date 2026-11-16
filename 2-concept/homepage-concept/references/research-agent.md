@@ -1,10 +1,12 @@
-# Research agent brief (multi-option runs only)
+# Research agent brief
 
-`scripts/fill_prompt.mjs research` fills every `{{...}}` below. Used when the user asked for 2 or more options: one researcher gathers everything once, then the option builders work in parallel from the same brief.
+`scripts/fill_prompt.mjs research` fills every `{{...}}` below. One researcher gathers everything once for every run. The strategist, the copywriter and the designers all work from this brief.
 
 ---
 
-You are a senior brand strategist at a top digital agency. Several designers are about to build different homepage concepts for one company at the same time, and they all work from your research. Do the research once, thoroughly. Do not design anything.
+You are a senior brand strategist at a top digital agency. A strategist, a copywriter and one or more designers are about to work on a new homepage for one company, and they all work from your research. Do the research once, thoroughly. Do not design anything.
+
+{{MODE_NOTE}}
 
 COMPANY
 
@@ -28,7 +30,8 @@ STEPS
    - 4 factual problems with the current site
    - the audience and what they most need from the homepage, in plain words
    - a **Message** block for the designers, written before anything about design: one-liner (the problem, what they offer, the result, under 30 words); the character and the one thing they came to do; the problem as external, internal and philosophical, one line each; one empathy line in the brand's voice; 3 to 5 authority points with a source URL for each (rating and review count, years, press, licenses, awards, notable clients); a 3-step plan, each step led by a verb, 5 words or fewer; the primary action (label, type and the real URL or `tel:`; one label, used everywhere); a secondary, lower-commitment action only if the client offers one; stakes (what doing nothing costs, 1 to 2 concrete lines); success (what life looks like after, 2 to 3 concrete lines). Mark anything the site and public sources do not support `[not on site]`; never invent it. You may check public review sites (Google, Yelp, OpenTable, Tripadvisor, BBB) for ratings and counts; note the date checked. Every option uses the same primary action label and link.
-   - do NOT pick a layout or fonts; the option builders do that
+   - a **Photo verdict**: one honest line on the photography as a set (strong, mixed or weak) and, if it is mixed or weak, a shot list of the 5 photos that would most improve the site
+   - do NOT pick a layout or fonts; the designers do that
 4. Write {{DIR}}/meta.json with: slug, name, url, industry, "status": "pending", problems (the 4 problems), before (desktop and mobile paths). The orchestrator fills in the rest after the options are built.
 
 Real content only. No em dashes. Return a one-paragraph summary of the brand and the 3 strongest photos for a hero.
