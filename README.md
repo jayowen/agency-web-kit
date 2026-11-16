@@ -34,9 +34,9 @@ node install-skills.mjs
 npx wrangler login
 ```
 
-The first line gives Claude Code three new skills. The second connects your computer to your Cloudflare account; it opens a browser, and you click Allow.
+The first line gives Claude Code four new skills. The second connects your computer to your Cloudflare account; it opens a browser, and you click Allow.
 
-Restart Claude Code. Type `/` and you should see `assessment-builder`, `homepage-concept` and `concept-to-site`.
+Restart Claude Code. Type `/` and you should see `assessment-builder`, `homepage-concept`, `concept-to-site` and `add-feedback-widget`.
 
 Everything here runs the same on a Mac and on Windows.
 

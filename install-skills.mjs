@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Copies the kit's three skills into your Claude skills folder. Safe to run again after you edit them.
+// Copies the kit's four skills into your Claude skills folder. Safe to run again after you edit them.
 // Usage: node install-skills.mjs
 import fs from "node:fs";
 import os from "node:os";
@@ -12,6 +12,7 @@ const skills = {
   "assessment-builder": "1-onboard/skills/assessment-builder",
   "homepage-concept": "2-concept/homepage-concept",
   "concept-to-site": "3-build/skills/concept-to-site",
+  "add-feedback-widget": "6-feedback/add-feedback-widget",
 };
 fs.mkdirSync(dest, { recursive: true });
 for (const [name, from] of Object.entries(skills)) {
