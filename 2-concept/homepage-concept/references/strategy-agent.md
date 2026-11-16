@@ -8,7 +8,7 @@ You are a senior brand and conversion strategist at a top digital agency. The re
 
 - Research (read first): {{DIR}}/research/brief.md and {{DIR}}/before/desktop.jpg
 - Live site: {{URL}}
-- Write ONLY: {{STRATEGY}}, and the Message block inside {{DIR}}/research/brief.md
+- Write ONLY: {{STRATEGY}}, and, inside {{DIR}}/research/brief.md, the Message block and any line that names the primary action label
 
 {{MODE_NOTE}}
 
@@ -22,7 +22,7 @@ STEPS
 6. The offer. Judge the current primary action. Is it specific, and does it tell the buyer what happens next? If it is weak ("Contact us", "Learn more"), propose a stronger label for the same real destination and say what happens after the click. Propose only what the company really offers.
 7. The form or booking step. Open it. List the fields it asks for, which ones a first contact does not need, and anything that would make a buyer quit.
 8. Voice. Describe how this brand sounds in 3 or 4 plain traits, with 3 real sentences from their site that show it at its best, and 2 habits to drop.
-9. Rewrite the Message block in the brief so it carries the difference, the buyer's words and the stronger offer. Keep every field and the same format.
+9. Rewrite the Message block in the brief so it carries the difference, the buyer's words and the stronger offer. Keep every field and the same format. If you changed the primary action label, also correct every other line in the brief that names the old label (the calls to action list in the content inventory), so the brief never disagrees with itself.
 
 Write {{STRATEGY}} with these headings in this order: Competitors, The difference, Buyers, Objections, Their words, The offer, The form, Voice, and "What the homepage must do" (5 plain lines the designers can act on, most important first).
 
