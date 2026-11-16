@@ -171,6 +171,7 @@ Concepts become real sites. Design freely, but build so a developer (or the conc
 - `overflow-x: clip` on `html` and `body`, never `hidden` (it breaks sticky headers). Never `100vw` for widths; use `100%`.
 - Every link, button and field has a `:focus-visible` style.
 - Every animation has a `prefers-reduced-motion: reduce` fallback, and every word is visible with scripting off.
+- Nothing a visitor needs (the button, a headline, a result number) starts at `opacity: 0`; animate movement, not appearance. Never detect automated browsers (`navigator.webdriver`) to change what the page shows: the screenshots and the judge must see what a visitor sees.
 - Image grid tracks use `minmax(0, 1fr)`; giant display type gets `overflow-wrap: break-word; min-width: 0` so it never pushes the page sideways.
 - One primary button style, one container width, one radius per nesting level. No card inside a card.
 - Labels, captions and tags are the body face a step smaller, in sentence case, not tiny letterspaced capitals (unless that is the brand's real voice; then waive it).
