@@ -16,14 +16,27 @@ jobs:
     if: github.event.schedule != '0 13 * * 1'
     runs-on: ubuntu-latest
     steps:
+      # Backups only run in private repos: the artifact holds respondents' names and emails.
+      # (Checked via the API because scheduled runs don't include github.event.repository.)
+      - name: Skip if repo is public
+        id: vis
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          private=$(gh api "repos/${{ github.repository }}" --jq .private)
+          echo "private=$private" >> "$GITHUB_OUTPUT"
+          [ "$private" = "true" ] || echo "::warning::Repo is public, skipping backup so respondent data is never published."
       - uses: actions/checkout@v4
+        if: steps.vis.outputs.private == 'true'
       - name: Export D1
+        if: steps.vis.outputs.private == 'true'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: d1 export ${{ vars.PAGES_PROJECT }} --remote --output backup.sql
       - uses: actions/upload-artifact@v4
+        if: steps.vis.outputs.private == 'true'
         with:
           name: d1-backup-${{ github.run_id }}
           path: backup.sql
