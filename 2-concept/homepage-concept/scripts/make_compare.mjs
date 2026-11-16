@@ -41,8 +41,12 @@ for (const name of fs.existsSync(ws) ? fs.readdirSync(ws).sort() : []) {
   if (!m || m.status !== "done") continue;
   done.push([name, m]);
   const opts = m.options?.length ? m.options : [{ option: "A", label: "", concept: m.concept || "concept/index.html", after: m.after || {}, changes: m.changes || [], design_thesis: m.design_thesis || "", palette: m.palette || [], fonts: m.fonts || [], tagline: m.tagline || "" }];
+  // meta.json is written from scraped sites, so paths are only trusted when they are plain relative file paths.
+  const rel = (p, fallback) => (typeof p === "string" && /^[\w][\w./-]*$/.test(p) && !p.includes("..") ? p : fallback);
+  const shots = (s, base) => ({ desktop: rel(s?.desktop, base + "/desktop.jpg"), mobile: rel(s?.mobile, base + "/mobile.jpg") });
+  for (const o of opts) { o.concept = rel(o.concept, "concept/index.html"); o.after = shots(o.after, "after"); }
   const pick = (o) => Object.fromEntries(["option", "label", "concept", "after", "changes", "design_thesis", "palette", "fonts", "tagline"].map((k) => [k, o[k] ?? null]));
-  const data = { before: m.before || {}, opts: opts.map(pick) };
+  const data = { before: shots(m.before, "before"), opts: opts.map(pick) };
   const tabs = opts.length > 1
     ? '<div class="seg opts" role="group" aria-label="Design option">' + opts.map((o, i) => `<button data-o="${i}">Option ${e(o.option || String.fromCharCode(65 + i))}${o.label ? ": " + e(o.label) : ""}</button>`).join("") + "</div>"
     : "";

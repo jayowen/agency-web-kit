@@ -14,6 +14,7 @@ const opts = [];
 for (const f of fs.readdirSync(research).filter((x) => /^option-.*\.json$/.test(x)).sort()) {
   const o = JSON.parse(fs.readFileSync(path.join(research, f), "utf8"));
   const letter = String(o.option || f.replace(/^option-|\.json$/g, "")).toLowerCase();
+  if (!/^[a-z]$/.test(letter)) { console.error(`skipping ${f}: option must be one letter`); continue; }
   const base = letter === "a" ? "" : `options/${letter}/`;
   o.option = letter.toUpperCase();
   o.concept = `${base}concept/index.html`;
