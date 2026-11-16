@@ -147,7 +147,8 @@ export async function scrollScan(browser, file, { sizes = SIZES, shotsDir = null
 }
 
 // Tiles each width's scroll shots into contact sheets (up to 12 frames per sheet) by rendering a grid
-// page in the same browser, so it needs nothing beyond Playwright.
+// page in the same browser, so it needs nothing beyond Playwright. Frames are inlined as data URLs:
+// a blank page is not allowed to load file:// images, which left the sheets empty.
 async function makeSheets(browser, shotsDir) {
   const page = await (await browser.newContext({ viewport: { width: 1860, height: 1000 } })).newPage();
   for (const w of SHEET_WIDTHS) {
@@ -155,7 +156,7 @@ async function makeSheets(browser, shotsDir) {
     if (!files.length) continue;
     const phone = w < 600, cols = phone ? 6 : 2, per = phone ? 18 : 12, tw = phone ? 300 : 900;
     for (let start = 0, part = 1; start < files.length; start += per, part++) {
-      const imgs = files.slice(start, start + per).map((f) => `<img src="${pathToFileURL(path.join(shotsDir, f)).href}">`).join("");
+      const imgs = files.slice(start, start + per).map((f) => `<img src="data:image/jpeg;base64,${fs.readFileSync(path.join(shotsDir, f)).toString("base64")}">`).join("");
       await page.setContent(`<body style="margin:0;background:#e00"><div style="display:grid;grid-template-columns:repeat(${cols},${tw}px);gap:8px;padding:8px;width:max-content">${imgs}</div><style>img{width:${tw}px;display:block}</style></body>`, { waitUntil: "load" });
       const name = files.length <= per ? `sheet-${w}.jpg` : `sheet-${w}-${part}.jpg`;
       await page.locator("div").first().screenshot({ path: path.join(shotsDir, name), quality: 70 });
@@ -172,6 +173,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   let bad = 0;
   for (const dir of dirs) {
     const file = path.join(dir, "concept/index.html");
+    if (!fs.existsSync(file)) { console.error(`${dir}: no concept/index.html here. Pass the concept folder's full path, not its name.`); bad++; continue; }
     const shotsDir = path.join(dir, "research/scroll");
     fs.rmSync(shotsDir, { recursive: true, force: true });
     fs.mkdirSync(shotsDir, { recursive: true });
