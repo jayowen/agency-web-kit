@@ -36,14 +36,21 @@ export async function POST(request: Request) {
     );
   }
 
+  // Fast reject on a declared oversize body, then enforce the cap on the bytes
+  // actually read: Content-Length can be missing (chunked) or wrong.
   const contentLength = Number(request.headers.get('content-length') ?? 0);
   if (contentLength > MAX_BODY_BYTES) {
     return NextResponse.json({ error: 'Request too large' }, { status: 413 });
   }
 
+  const raw = await readBodyCapped(request, MAX_BODY_BYTES);
+  if (raw === null) {
+    return NextResponse.json({ error: 'Request too large' }, { status: 413 });
+  }
+
   let body: unknown;
   try {
-    body = await request.json();
+    body = JSON.parse(raw);
   } catch {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
   }
@@ -80,4 +87,30 @@ export async function POST(request: Request) {
   });
 
   return NextResponse.json({ success: true });
+}
+
+// Reads the request body as a stream and stops once it passes maxBytes.
+// Returns the text, or null if the body is too large.
+async function readBodyCapped(request: Request, maxBytes: number): Promise<string | null> {
+  if (!request.body) return '';
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.byteLength;
+    if (total > maxBytes) {
+      await reader.cancel();
+      return null;
+    }
+    chunks.push(value);
+  }
+  const buf = new Uint8Array(total);
+  let offset = 0;
+  for (const c of chunks) {
+    buf.set(c, offset);
+    offset += c.byteLength;
+  }
+  return new TextDecoder().decode(buf);
 }

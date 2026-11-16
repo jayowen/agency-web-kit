@@ -113,7 +113,7 @@ idiomatic — but keep these contracts.
 ### A. Submit — `POST /api/feedback` (any signed-in user; or public if the app has no auth)
 - **Auth**: must be authenticated → else `401`. **If the app has no user auth, submit is public** (the rate limit + body cap + validation below are then the only gate — keep them strict).
 - **Rate limit**: per-IP then per-user (reference: 20/10min IP, 5/10min user) → `429`.
-- **Body cap**: reject bodies over ~2MB *before* parsing → `413`.
+- **Body cap**: reject bodies over ~2MB *before* parsing → `413`. Count the bytes actually read (stream with a running total), not just the Content-Length header, which can be missing or false.
 - **Validate** body → `422` on failure: `type` in enum; `comment` non-empty ≤5000;
   `url` is http/https; screenshot (if present) is a `data:image/jpeg;base64,…`
   string under ~1.5MB.

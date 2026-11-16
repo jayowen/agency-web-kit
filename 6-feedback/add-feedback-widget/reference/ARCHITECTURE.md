@@ -44,8 +44,8 @@ Admin review page /admin/feedback (client)
 2. **Rate limited.** IP gate first (bounds an unauthenticated burst), then a
    per-user gate. Both via the in-memory `rate-limit.ts` (best-effort; swap for
    Redis on multi-instance for hard guarantees).
-3. **Body-size capped before parse.** Content-Length check (~2MB) precedes
-   `request.json()`; the screenshot string is separately capped (~1.5MB) in the
+3. **Body-size capped before parse.** The body is read as a stream and cut off past ~2MB (a Content-Length check alone is bypassable), before
+   `JSON.parse`; the screenshot string is separately capped (~1.5MB) in the
    schema. Prevents giant-payload abuse.
 4. **URL is http/https only.** `createFeedbackSchema` rejects other schemes so a
    `javascript:` URL can never become a clickable link in the admin's
