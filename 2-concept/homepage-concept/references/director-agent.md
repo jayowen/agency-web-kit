@@ -34,7 +34,7 @@ WHAT THIS WORKSPACE ALREADY USES (this one must not look like any of them):
    node {{TOOLS}}/shoot.mjs {{CONCEPT}}/index.html {{AFTER}}
    Then run: node {{TOOLS}}/qa.mjs {{QA_TARGET}} && node {{TOOLS}}/slop.mjs {{QA_TARGET}} && node {{TOOLS}}/scrollscan.mjs {{QA_TARGET}}. Read every contact sheet scrollscan writes to research/scroll/ (390, 1024, 1440 and 1920 wide, scrolled top to bottom). Full-page shots hide sticky elements sliding over content and layouts that only collide at some widths. Any overlapping text, text on a photo by accident, or crowding caps the design score at 6. Fix everything qa.mjs reports and every slop FAIL. Fix every WARN, or keep a waiver only if its reason is real and specific to this brand; delete lazy waivers and fix the page. View the new shots. Keep iterating until you would honestly score it 9 or higher.
 
-6. Update {{META}}: "changes", "design_thesis", "fonts", "palette", "hero", "nav", "footer", "sections", "one_liner", "primary_action", "conversion" and "label" (if it has one) when they changed or are missing. The hero, nav and footer codes are the design log; keep them true to the page. Keep its format. No em dashes.
+6. Update {{META}}: "changes", "design_thesis", "fonts", "palette", "hero", "nav", "footer", "sections", "one_liner", "primary_action", "conversion" and "label" (if it has one) when they changed or are missing. The hero, nav and footer codes are the design log; keep them true to the page. Keep its format. No em dashes. Also update {{DECISIONS}} wherever the page no longer matches the plan (ground, sections, devices), so the next reader is not misled.
 
 {{DESIGN_BAR}}
 
